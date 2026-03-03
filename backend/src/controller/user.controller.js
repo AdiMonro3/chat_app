@@ -36,7 +36,15 @@ export const signup = async (req, res) => {
 
         await newUser.save();
 
-        res.status(201).json({ 
+        const options = {
+            httpOnly: true,
+            secure: false
+        }
+
+        res.status(201)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json({ 
             user: {
                 _id: newUser._id,
                 username: newUser.username,
