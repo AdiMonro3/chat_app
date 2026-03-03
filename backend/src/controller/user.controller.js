@@ -143,14 +143,14 @@ export const searchUsers = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-      const { profilePic } = req.body;
+      const { profilePicture } = req.body;
       const userId = req.user.id;
   
-      if (!profilePic) {
+      if (!profilePicture) {
         return res.status(400).json({ message: "Profile pic is required" });
       }
   
-      const uploadResponse = await cloudinary.uploader.upload(profilePic);
+      const uploadResponse = await cloudinary.uploader.upload(profilePicture);
   
       const updatedUser = await User.findByIdAndUpdate(
         userId,

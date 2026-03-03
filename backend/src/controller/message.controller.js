@@ -7,10 +7,10 @@ import { getReceiverSocketId, io } from "../utils/socket.utils.js";
 export const getUserForSidebar = async (req, res) => {
   try {
     const loggedInUserId = req.user.id;
-    console.log("Logged in user ID:", loggedInUserId);
+    // console.log("Logged in user ID:", loggedInUserId);
     
     const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
-    console.log("Users returned:", filteredUsers.map(u => u._id.toString()));
+    // console.log("Users returned:", filteredUsers.map(u => u._id.toString()));
 
     res.status(200).json(filteredUsers);
   } catch (error) {
@@ -21,6 +21,8 @@ export const getUserForSidebar = async (req, res) => {
 
 export const getMessages = async (req, res) => {
   try {
+    // console.log("req.params:", req.params);
+    // console.log("req.user:", req.user);
     const { id: userToChatId } = req.params;
     const myId = req.user._id;
 
@@ -41,9 +43,11 @@ export const getMessages = async (req, res) => {
 export const sendMessage = async (req, res) => {
   try {
     // console.log("req.user:", req.user);
+    // console.log("req.params:", req.params);
     const { text, image } = req.body;
     const { id: receiverId } = req.params;
-    const senderId = req.user.id;
+    // console.log("senderId:", req.user._id);
+    const senderId = req.user._id;
 
     let imageUrl;
     if (image) {
@@ -54,7 +58,7 @@ export const sendMessage = async (req, res) => {
 
     const newMessage = new Message({
       sender:senderId,
-      reciever:receiverId,
+      receiver:receiverId,
       text,
       image: imageUrl,
     });
@@ -62,6 +66,7 @@ export const sendMessage = async (req, res) => {
     await newMessage.save();
 
     const receiverSocketId = getReceiverSocketId(receiverId);
+    // console.log("Receiver Socket ID:", receiverSocketId);
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
     }
