@@ -5,8 +5,8 @@ import { useChatStore } from "../store/chatStore";
 const ChatHeader = () => {
   const { selectedUser, setSelectedUser } = useChatStore();
   const { onlineUsers } = useAuthStore();
-  console.log("onlineUsers:", onlineUsers);
-console.log("selectedUser._id:", selectedUser._id);
+//   console.log("onlineUsers:", onlineUsers);
+// console.log("selectedUser._id:", selectedUser._id);
 
   return (
     <div className="p-2.5 border-b border-base-300">
@@ -15,7 +15,7 @@ console.log("selectedUser._id:", selectedUser._id);
           {/* Avatar */}
           <div className="avatar">
             <div className="size-10 rounded-full relative">
-              <img src={selectedUser.profilePic || "/avatar.png"} alt={selectedUser.username} />
+              <img src={selectedUser.profilePicture || "/avatar.png"} alt={selectedUser.username} />
             </div>
           </div>
 

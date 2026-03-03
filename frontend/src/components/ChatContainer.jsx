@@ -54,7 +54,7 @@ const ChatContainer = () => {
         
           <div
             key={message._id}
-            className={`chat ${message.sender === authUser.id ? "chat-end" : "chat-start"}`}
+            className={`chat ${message.sender === authUser._id ? "chat-end" : "chat-start"}`}
             ref={messageEndRef}
           >
             <div className=" chat-image avatar">
@@ -62,10 +62,10 @@ const ChatContainer = () => {
                 <img
                   src={
                     message.sender === authUser._id
-                      ? authUser.profilePic || "/avatar.png"
-                      : selectedUser.profilePic || "/avatar.png"
+                      ? authUser.profilePicture || "/avatar.png"
+                      : selectedUser.profilePicture || "/avatar.png"
                   }
-                  alt="profile pic"
+                  alt="profile picture"
                 />
               </div>
             </div>
